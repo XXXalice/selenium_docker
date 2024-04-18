@@ -1,0 +1,22 @@
+version: "3"
+services:
+  # Selenium サーバを起動するコンテナ
+  selenium:
+    container_name: selenium-chrome
+    image: selenium/standalone-chrome
+    ports:
+      # Selenium サーバに接続するポート
+      - "4444:4444"
+      # VNC
+      - "5900:5900"
+      # Seleniumログ出力
+      - "7900:7900"
+    # コンテナが使用するメモリの上限を設定
+    shm_size: "2gb"
+  # Webスクレイピングを実行するコンテナ
+  scraper:
+    container_name: scraper
+    build: ./app
+    volumes:
+      - ./app:/opt/app
+    tty: true
